@@ -4,19 +4,20 @@ import { connect } from "react-redux"
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
+import Jumbotron from "react-bootstrap/Jumbotron"
 import ProgressBar from "react-bootstrap/ProgressBar"
 import Row from "react-bootstrap/Row"
 
 
 
-const Team = ({poketeam, progressBarColor}) => {
+const Team = ({poketeam, progressBarColor, deletePokemon}) => {
 
     if(poketeam.length === 0){
         return(
         <section>
-            <Card>
-                <p>No has agregado pokemones a tu team</p>
-            </Card>
+            <Jumbotron>
+                <h1>No tenés pokemons en tu team</h1>
+            </Jumbotron>
         </section>
         )
     }else{  
@@ -40,7 +41,15 @@ const Team = ({poketeam, progressBarColor}) => {
                                 <div className="details">
                                     <span>{pokemon.types[1] ?  <p> {pokemon.types[0].type.name} / {pokemon.types[1].type.name}</p> 
                                                             : <p> {pokemon.types[0].type.name}</p>} </span>
-                                    <h3>{pokemon.name}</h3>
+                                    <Row>
+                                        <Col>
+                                            <h3>{pokemon.name}</h3>
+                                        </Col>
+                                        <Col md={{ span: 4 }}>
+                                            <Button variant="outline-danger" size="sm"
+                                                onClick={()=>deletePokemon(pokemon)}>Borrar</Button>
+                                        </Col>
+                                    </Row>
                                         <Row>
                                             <Col>
                                                 <span>Atk: {pokemon.stats[4].base_stat}</span>
@@ -81,15 +90,10 @@ const Team = ({poketeam, progressBarColor}) => {
                                 </ul>
                             </div>
                         </div>
-
-            )
-        }
+                    )
+                }
                     </div>
                 </div>
-
-                <Button variant="outline-success" disabled = {poketeam.length !== 7} >
-                    Evaluar Equipo
-                </Button>
             </Card>
         </section>
         )

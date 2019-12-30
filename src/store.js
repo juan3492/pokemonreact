@@ -85,7 +85,8 @@ const initialState = {
         ],
         "weight": 60
       },
-    poketeam:[]
+    poketeam:[],
+    showreview:false,
 }
 
 const reducerTeam = (state = initialState, action) =>{
@@ -115,20 +116,37 @@ const reducerTeam = (state = initialState, action) =>{
           error: 'Nombre de pokemon inexistente'
         }
       case "ADD_POKEMON":
-        if(state.poketeam.length <= 6)
-          return{
-          ...state,
-            poketeam: state.poketeam.concat(action.pokemon)
+        if(state.poketeam.length <= 5){
+          if (state.poketeam.length === 5){
+            return{
+              ...state,
+              poketeam: state.poketeam.concat(action.pokemon),
+              showreview: true
+            }
+          }else{
+            return{
+              ...state,
+              poketeam: state.poketeam.concat(action.pokemon),
+              showreview: false
+            }
           }
+        }
         else{
-          alert("Tu equipo no puede superar los 7 integrantes")
+          alert("Tu equipo no puede superar los 6 integrantes")
           return{
             ...state
           }
+        }
+      case "DELETE_POKEMON":
+        return{
+          ...state,
+          poketeam: state.poketeam.filter(p => p.id !== action.pokemon.id),
+          showreview: false,
         }
       default:
     }
     return state
 }
+
 
 export default createStore(reducerTeam)

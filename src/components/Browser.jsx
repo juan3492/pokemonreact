@@ -111,7 +111,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch({
             type: "POKENAME_REQUEST"
         });
-        return Axios.get('https://pokeapi.co/api/v2/pokemon/'+pokename.toLowerCase())
+        if(pokename.length > 0){   
+            return Axios.get('https://pokeapi.co/api/v2/pokemon/'+pokename.toLowerCase())
             .then(res => {
                 dispatch({
                     type: 'GET_DATA_SUCCESS',
@@ -125,8 +126,12 @@ const mapDispatchToProps = (dispatch) => ({
                     payload:''
                 });
             });
+        }else{
+            alert("escribe el nombre del pokemon primero")
+        }
     },
     addPokemon(pokemon){
+        pokemon["id"] = generateID(pokemon.name)
         dispatch({
             type: "ADD_POKEMON",
             pokemon
@@ -151,5 +156,10 @@ const mapDispatchToProps = (dispatch) => ({
 function between(x, min, max) {
     return x >= min && x <= max;
   }
+
+const generateID = (pre) => {
+     return `${ pre }_${ new Date().getTime() }`;
+}
+  
 
 export default connect(mapStateToProps, mapDispatchToProps)(Browser)
