@@ -31,7 +31,7 @@ const Team = ({poketeam, progressBarColor, deletePokemon}) => {
                     poketeam.map((pokemon) =>
 
 
-                        <div className="col">
+                        <div className="col" key={poketeam.indexOf(pokemon)}>
                             <div 
                             className={`p-card ${ pokemon.types[1]?  pokemon.types[Math.floor(Math.random() * (1 - 0 + 1))].type.name  
                                                                     : pokemon.types[0].type.name }`}>

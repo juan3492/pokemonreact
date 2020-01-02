@@ -19,8 +19,8 @@ const Browser = ({pokemon, pokename, pokenameChange, pokenameRequest, progressBa
                 onChange={event => pokenameChange(event.target.value)}/>
                 <br/>
             <Button variant="outline-danger" onClick={()=> pokenameRequest(pokename)}>
-                        Submit
-                    </Button>
+                Submit
+            </Button>
             </Card.Body>
         </Card>
         <br/>

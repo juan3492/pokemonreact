@@ -1,63 +1,75 @@
-import React from "react"
+import React, {useState} from "react"
 import { connect } from "react-redux"
 import Card from "react-bootstrap/Card"
+import Col from "react-bootstrap/Col"
 import Jumbotron from "react-bootstrap/Jumbotron"
 import ProgressBar from "react-bootstrap/ProgressBar"
-import "./Review.scss";
 import Row from "react-bootstrap/Row"
+import "./Review.scss";
 
 const Review = ({makestats, poketeam, progressBarColor, show, typesCoverage}) =>{
     if(show){
         const stats = makestats(poketeam)
         const types = typesCoverage(poketeam)
         return (
-            <div className="card review" >               
+            <Card >               
                 <Card className="review" style={{margin: "1%"}}>
-                <Card.Header>Promedio de estadisticas Base</Card.Header>
-                
-                    <ProgressBar variant={progressBarColor(stats.hp)} 
-                                label={`HP : ${stats.hp}`} 
-                                now={stats.hp} max={255}
-                                style={{margin:"1%"}} />
-                    <br/>
-                    <ProgressBar variant={progressBarColor(stats.atk)} 
-                                label={`Ataque : ${stats.atk}`} 
-                                now={stats.atk} max={230}
-                                style={{margin:"1%"}} />
-                    <br/>
-                    <ProgressBar variant={progressBarColor(stats.def)} 
-                                label={`Defensa : ${stats.def}`} 
-                                now={stats.def} max={230}
-                                style={{margin:"1%"}} />
-                    <br/>
-                    <ProgressBar variant={progressBarColor(stats.satk)} 
-                                label={`Ataque Spe : ${stats.satk}`} 
-                                now={stats.satk} max={230}
-                                style={{margin:"1%"}} />
-                    <br/>
-                    <ProgressBar variant={progressBarColor(stats.sdef)} 
-                                label={`Defensa Spe : ${stats.sdef}`} 
-                                now={stats.sdef} max={230}
-                                style={{margin:"1%"}} />
-                    <br/> 
-                    <ProgressBar variant={progressBarColor(stats.spd)}
-                                label={`Velocidad : ${stats.sdef}`} 
-                                now={stats.sdef} max={230}
-                                style={{margin:"1%"}} />   
-                    <p style={{paddingLeft:"1%"}}>Si la estadistica esta en color Rojo, significa que la estadistica es muy alta</p>
-                    <p style={{paddingLeft:"1%"}}>Si la estadistica esta en color Naranja, significa que la estadistica es alta</p>
-                    <p style={{paddingLeft:"1%"}}>Si la estadistica esta en color Verde, significa que la estadistica es equilibrada</p>
-                    <p style={{paddingLeft:"1%"}}>Si la estadistica esta en color Celeste, significa que la estadistica es baja, deberias mejorarla</p>        
+                    <Card.Header>Promedio de estadisticas Base</Card.Header>
+                    <Card.Body>
+                        <ProgressBar variant={progressBarColor(stats.hp)} 
+                                    label={`HP : ${stats.hp}`} 
+                                    now={stats.hp} max={255}/>
+                        <br/>
+                        <ProgressBar variant={progressBarColor(stats.atk)} 
+                                    label={`Ataque : ${stats.atk}`} 
+                                    now={stats.atk} max={230}/>
+                        <br/>
+                        <ProgressBar variant={progressBarColor(stats.def)} 
+                                    label={`Defensa : ${stats.def}`} 
+                                    now={stats.def} max={230}/>
+                        <br/>
+                        <ProgressBar variant={progressBarColor(stats.satk)} 
+                                    label={`Ataque Spe : ${stats.satk}`} 
+                                    now={stats.satk} max={230}/>
+                        <br/>
+                        <ProgressBar variant={progressBarColor(stats.sdef)} 
+                                    label={`Defensa Spe : ${stats.sdef}`} 
+                                    now={stats.sdef} max={230}/>
+                        <br/> 
+                        <ProgressBar variant={progressBarColor(stats.spd)}
+                                    label={`Velocidad : ${stats.sdef}`} 
+                                    now={stats.sdef} max={230}/>
+                        <br/>
+
+                        <p>Si la estadistica esta en color Rojo, significa que la estadistica es muy alta.</p>
+                        <p>Si la estadistica esta en color Naranja, significa que la estadistica es alta.</p>
+                        <p>Si la estadistica esta en color Verde, significa que la estadistica es equilibrada.</p>
+                        <p>Si la estadistica esta en color Celeste, significa que la estadistica es baja, deberias mejorarla.</p>        
+                    </Card.Body>
                 </Card>
                 <Card style={{margin: "1%"}}>
                     <Card.Header>Covertura de tipos</Card.Header>
-                    <Card.Text style={{padding: "1%"}}>
-                        aca tendriamos que decir que tipos cubre y que tipos no cubre
-                        {types.cover}
-                    </Card.Text>
+                    <Card.Body>    
+                        <p>Tu equipo cubre {types.coverlen} de 17 tipos.</p>
+                        <Row>
+                            <Col>
+                                <p>Tu equipo cubre:</p>
+                                <ul>
+                                    { types.cover.map((type)=> <li key= {types.cover.indexOf(type)} >{`${type} `}</li>) }
+                                </ul>
+                            </Col>
+                            <Col>
+                                <p>Tu equipo no cubre:</p>
+                                <ul>
+                                    { types.notcover.map((type)=> <li key={types.notcover.indexOf(type)}>{`${type} `}</li>) }
+                                </ul>
+                            </Col>
+                        </Row>
+                        <p>Tu equipo tiene una covertura {types.coverrev}.</p>
+                    </Card.Body>
                 </Card>
                 <br/>
-            </div>
+            </Card>
         )}else{
             return(
                 <Jumbotron>
@@ -94,32 +106,46 @@ const mapDispatchToProps = (dispatch) =>({
         return (stats)
     },
     typesCoverage(poketeam){
-        var types = ["bug", "dark", "dragon", 
+        var notcover = ["bug", "dark", "dragon", 
                     "electric", "fighting", "fire", 
                     "flying", "ghost", "grass", 
                     "ground", "ice", "normal", 
                     "poison", "psychic", "rock", 
                     "steel", "water"]
         var cover = []
+        var coverrev = null
+        var coverlen = 0
         for(var i=0; i<poketeam.length; i++){
             if(poketeam[i].types[1]){
-                if(cover.indexOf(poketeam[i].types[0].type.name)===-1){
-                    cover.concat(poketeam[i].types[0].type.name)
+                if(cover.indexOf(poketeam[i].types[0].type.name)===-1){ 
+                    cover.push(poketeam[i].types[0].type.name)
+                    notcover.splice(notcover.indexOf(poketeam[i].types[0].type.name), 1)
+                    coverlen++
                 }
                 if(cover.indexOf(poketeam[i].types[1].type.name)===-1){
-                    cover.concat(poketeam[i].types[1].type.name)
+                    cover.push(poketeam[i].types[1].type.name)
+                    notcover.splice(notcover.indexOf(poketeam[i].types[1].type.name), 1)
+                    coverlen++
                 }
             }else{
-                if(poketeam[i].types[1]){
-                    if(cover.indexOf(poketeam[i].types[0].type.name)===-1){
-                        cover.concat(poketeam[i].types[0].type.name) 
-                    } 
-                }     
+                if(cover.indexOf(poketeam[i].types[0].type.name)===-1){
+                    cover.push(poketeam[i].types[0].type.name)
+                    notcover.splice(notcover.indexOf(poketeam[i].types[0].type.name), 1)
+                    coverlen++
+                }                  
             }
         }
-        console.log(types)
-        console.log(cover)
-        return ({"types": types, "cover": cover })
+        if(coverlen > 9){
+            coverrev = "Muy alta, tenes una muy buena covertura de equipos"
+        }else if(coverlen > 7){
+            coverrev = "Alta, tenes una buena covertura de equipos"
+        }else if(coverlen === 6){
+            coverrev = "Equilibrada, la covertura de equipos es regular"
+        }else{
+            coverrev = "Mala, tenes poca diversidad de tipos en tu equipo"
+        }
+
+        return ({"notcover": notcover, "cover": cover, "coverlen": coverlen, "coverrev": coverrev })
     },
     progressBarColor(stat){
         if(between(stat, 150, 255)){
