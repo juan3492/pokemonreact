@@ -2,9 +2,10 @@ import { createStore } from "redux";
 
 const initialState = {
     loading: false,
-    error: '',
+    error: "",
+    showerror: false,
     pokename: "",
-    browserinfo:{
+    browserinfo: {
         "id": 25,
         "is_default": true,
         "location_area_encounters": "https://pokeapi.co/api/v2/pokemon/25/encounters",
@@ -113,7 +114,8 @@ const reducerTeam = (state = initialState, action) =>{
         return{
           ...state,
           loading: false,
-          error: 'Nombre de pokemon inexistente'
+          error: action.error,
+          showerror: true
         }
       case "ADD_POKEMON":
         if(state.poketeam.length <= 5){
@@ -132,9 +134,10 @@ const reducerTeam = (state = initialState, action) =>{
           }
         }
         else{
-          alert("Tu equipo no puede superar los 6 integrantes")
           return{
-            ...state
+            ...state,
+            showerror: true,
+            error: "Tu equipo no puede superar los 6 integrantes"
           }
         }
       case "DELETE_POKEMON":
@@ -142,6 +145,12 @@ const reducerTeam = (state = initialState, action) =>{
           ...state,
           poketeam: state.poketeam.filter(p => p.id !== action.pokemon.id),
           showreview: false,
+        }
+      case "CLOSE_ERROR":
+        return{
+          ...state,
+          showerror: false,
+          error: "",
         }
       default:
     }

@@ -15,7 +15,7 @@ const Team = ({poketeam, progressBarColor, deletePokemon}) => {
     if(poketeam.length === 0){
         return(
         <section>
-            <Jumbotron>
+            <Jumbotron style={{ marginTop: "2%"}}>
                 <h1>No tenés pokemons en tu team</h1>
             </Jumbotron>
         </section>
@@ -23,7 +23,7 @@ const Team = ({poketeam, progressBarColor, deletePokemon}) => {
     }else{  
         return(
         <section>
-            <Card style ={{padding : "1%"}}>
+            <Card style ={{padding : "1%", marginTop: "1%", marginBotton: "1%"}} >
                 <div id="primary-content" className="primary-content">
                     <span>TU TEAM</span>
                     <div className="row">
