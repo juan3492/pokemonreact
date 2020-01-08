@@ -16,18 +16,36 @@ const Browser = ({loading, pokemon, pokename, pokenameChange, pokenameRequest, p
             <Card.Header>Escriba el nombre del pokemon que desee agregar a su equipo</Card.Header>
             <Card.Body>    
             <Form.Control name="pokename" type="text" placeholder="Ej: Pikachu" 
-                onChange={event => pokenameChange(event.target.value)}/>
+                onChange={event => pokenameChange(event.target.value)}
+                onKeyDown={event => { event.key === 'Enter' ? pokenameRequest(pokename) : void(0) } }/>
                 <br/>
-            <Button variant="outline-danger" onClick={()=> pokenameRequest(pokename)}>
-                Buscar
-            </Button>
+            { loading ?
+                 <Button variant="outline danger" disabled>
+                   <Spinner
+                     as="span"
+                     animation="grow"
+                     size="sm"
+                     role="status"
+                     aria-hidden="true"
+                     />
+                     Cargando...
+                </Button>
+            :
+                <Button variant="outline-danger" onClick={()=> pokenameRequest(pokename)}>
+                    Buscar
+                </Button>
+            }
             </Card.Body>
         </Card>
         <br/>
         { loading ?
-            <Spinner animation="border" role="status">
-            <span className="sr-only">Loading...</span>
-            </Spinner>
+            <Card className="text-center">
+                <Card.Body style={{padding: "25%"}}>
+                    <Spinner animation="grow" role="status">
+                    <span className="sr-only">Loading...</span>
+                    </Spinner>
+                </Card.Body>
+            </Card>
             
             :
 
@@ -144,7 +162,8 @@ const mapDispatchToProps = (dispatch) => ({
         }
     },
     addPokemon(pokemon){
-        pokemon["id"] = generateID(pokemon.name)
+        let id = generateID(pokemon.name)
+        pokemon["id"] = id
         dispatch({
             type: "ADD_POKEMON",
             pokemon
