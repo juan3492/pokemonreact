@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container"
 
 const Nav =({}) =>{
     return(
-        <Navbar expand="lg" variant="dark" bg="danger" style={{marginBottom: "1%"}}>>
+        <Navbar expand="lg" variant="dark" bg="danger" style={{marginBottom: "1%"}}>
             <Container>
                 <Navbar.Brand href="#">PokeReact</Navbar.Brand>
             </Container>
