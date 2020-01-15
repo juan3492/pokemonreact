@@ -7,3 +7,5 @@ The project consist in a simple app where you can make your own pokemon team and
 To this project I use Pokeapi (https://pokeapi.co/) to fetch the each pokemon information and I (try to) copy this model of cards (https://codepen.io/tin-minh-the-flexboxer/pen/JjoExyG) for the current pokemon team.
 
 Still is a work in progress...
+
+wanna try? https://juan3492.github.io/pokemonreact/
