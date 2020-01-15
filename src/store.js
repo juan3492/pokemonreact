@@ -122,13 +122,13 @@ const reducerTeam = (state = initialState, action) =>{
           if (state.poketeam.length === 5){
             return{
               ...state,
-              poketeam: state.poketeam.concat(action.pokemon),
+              poketeam: state.poketeam.concat(action.newpokemon),
               showreview: true
             }
           }else{
             return{
               ...state,
-              poketeam: state.poketeam.concat(action.pokemon),
+              poketeam: state.poketeam.concat(action.newpokemon),
               showreview: false
             }
           }

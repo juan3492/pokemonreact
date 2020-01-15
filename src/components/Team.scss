@@ -263,6 +263,17 @@
 	background: linear-gradient(to right, #0703ff, #00ccff);
 }
 
+/*fairy*/
+.p-card.fairy{ box-shadow: 0 0 25px rgba(182, 0, 167, 0.472); }
+.p-card.fairy:hover { box-shadow: 0 0 45px rgb(255, 0, 234); }
+.p-card.fairy > .details > span { color: rgb(255, 0, 234); }
+.p-card.fairy > .character-area { background-image: url('https://s3-us-east-2.amazonaws.com/hendersonvillefh/wp-content/uploads/2019/12/But-butterflies-7911918-300-300.jpg'); }
+.p-card.fairy > .stats {
+	background: #f12711;
+	background: -webkit-linear-gradient(to right, #bc00d4, #ee6bff);
+	background: linear-gradient(to right, #bc00d4, #ee6bff);
+}
+
 /* Inspiration Link */
 .lead > a { color: #f55; }
 .lead > a:hover {

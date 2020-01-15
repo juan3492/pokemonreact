@@ -62,7 +62,7 @@ const ReviewStats = ({makeStats, poketeam, progressBarColor}) =>{
                         
                     }
                 <ProgressBar variant={progressBarColor(stats.statsum.reduce((acc,cur) => acc + cur/6 )/6)}
-                label={`Promedio de suma de estadisticas : ${Math.round(stats.statsum.reduce((acc,cur) => acc + cur ))/6}`} 
+                label={`Promedio de suma de estadisticas : ${Math.round(stats.statsum.reduce((acc,cur) => acc + cur )/6)}`} 
                 now={Math.round(stats.statsum.reduce((acc,cur) => acc + cur ))/6} max={720}/>
                 <br/>
                 <p className="h4"> Datos atipicos </p>

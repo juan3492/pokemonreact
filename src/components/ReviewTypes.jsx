@@ -69,9 +69,10 @@ const mapDispatchToProps = (dispatch) =>({
                 }                  
             }
         }
+        console.log(poketeam)
         if(coverlen > 9){
             coverrev = "Muy alta, tenes una muy buena covertura de equipos"
-        }else if(coverlen > 7){
+        }else if(coverlen >= 7){
             coverrev = "Alta, tenes una buena covertura de equipos"
         }else if(coverlen === 6){
             coverrev = "Equilibrada, la covertura de equipos es regular"

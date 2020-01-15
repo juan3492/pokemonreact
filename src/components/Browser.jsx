@@ -1,5 +1,11 @@
+//react
 import React from "react"
 import { connect } from "react-redux"
+
+//axios
+import Axios from "axios"
+
+//react-bootstrap
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
@@ -9,7 +15,12 @@ import ProgressBar from "react-bootstrap/ProgressBar"
 import Row from "react-bootstrap/Row"
 import Table from "react-bootstrap/Table"
 import Spinner from "react-bootstrap/Spinner"
-import Axios from "axios"
+
+//icons
+import GiRing from "react-icons/gi"
+
+
+
 const Browser = ({loading, pokemon, pokename, pokenameChange, pokenameRequest, progressBarColor, addPokemon}) => (
     <section>
         <Card className="browser">
@@ -162,11 +173,11 @@ const mapDispatchToProps = (dispatch) => ({
         }
     },
     addPokemon(pokemon){
-        let id = generateID(pokemon.name)
-        pokemon["id"] = id
+        var newpokemon = JSON.parse(JSON.stringify(pokemon))
+        newpokemon["id"] = generateID(newpokemon.name)
         dispatch({
             type: "ADD_POKEMON",
-            pokemon
+            newpokemon
         });
     },
     progressBarColor(stat){
@@ -189,7 +200,7 @@ function between(x, min, max) {
     return x >= min && x <= max;
   }
 
-const generateID = (pre) => {
+function generateID(pre){
      return `${ pre }_${ new Date().getTime() }`;
 }
   

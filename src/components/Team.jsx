@@ -8,9 +8,13 @@ import Jumbotron from "react-bootstrap/Jumbotron"
 import ProgressBar from "react-bootstrap/ProgressBar"
 import Row from "react-bootstrap/Row"
 
-
-
-const Team = ({capitalize, deletePokemon, poketeam, progressBarColor}) => {
+//icons
+import { FaStarOfLife, FaSnowflake, FaEye, FaFire, FaGhost, FaMountain,
+         FaSkullCrossbones } from "react-icons/fa"
+import { GiEvilMoon, GiSeaDragon, GiElectric, GiLindenLeaf, GiDrop,
+         GiAnvil, GiRuneStone, GiAngelWings, GiPunchBlast, GiFairyWand} from "react-icons/gi"
+import { IoIosBug } from "react-icons/io";
+const Team = ({capitalize, deletePokemon, iconTypeSelector, iconWeaknessSelector, poketeam, progressBarColor}) => {
 
     if(poketeam.length === 0){
         return(
@@ -75,17 +79,32 @@ const Team = ({capitalize, deletePokemon, poketeam, progressBarColor}) => {
                                                     </Col>
                                                 </Row>
                                         </div>
-                                        <ul className="stats">
-                                            <li>
-                                                <span>Type</span>
-                                                <h5><i className="far fa-fire"></i></h5>
-                                            </li>
-                                            <li><span>HP</span><h5>{pokemon.stats[5].base_stat}</h5></li>
-                                            <li>
-                                                <span>Weakness</span>
-                                                <h5><i className="far fa-water"></i></h5>
-                                            </li>
-                                        </ul>
+                                            { pokemon.types[1]?
+                                                <ul className="stats">
+                                                    <li>
+                                                        <span>Type</span>
+                                                        <h5>{iconTypeSelector(pokemon.types[0].type.name)} {iconTypeSelector(pokemon.types[1].type.name)}</h5>
+                                                    </li>
+                                                    <li><span>HP</span><h5>{pokemon.stats[5].base_stat}</h5></li>
+                                                    <li>
+                                                        <span>Weakness</span>
+                                                        <h5>{iconWeaknessSelector(pokemon.types[0].type.name)} {iconWeaknessSelector(pokemon.types[1].type.name)}</h5>
+                                                    </li>
+                                                </ul>
+
+                                            :
+                                                <ul className="stats">
+                                                    <li>
+                                                        <span>Type</span>
+                                                        <h5>{iconTypeSelector(pokemon.types[0].type.name)}</h5>
+                                                    </li>
+                                                    <li><span>HP</span><h5>{pokemon.stats[5].base_stat}</h5></li>
+                                                    <li>
+                                                        <span>Weakness</span>
+                                                        <h5>{iconWeaknessSelector(pokemon.types[0].type.name)}</h5>
+                                                    </li>
+                                                </ul>
+                                            }
                                     </div>
                                 </div>
                             )
@@ -128,7 +147,92 @@ const mapDispatchToProps = (dispatch) =>({
     capitalize(s){
         if (typeof s !== 'string') return ''
         return s.charAt(0).toUpperCase() + s.slice(1)
-    }
+    },
+    iconTypeSelector(type){
+        switch (type) {
+            case "normal":
+                return <FaStarOfLife/>
+            case "dark":
+                return <GiEvilMoon/>
+            case "dragon":
+                return <GiSeaDragon/>
+            case "ice":
+                return <FaSnowflake/>
+            case "psychic":
+                return <FaEye/>
+            case "electric":
+                return <GiElectric/>
+            case "grass":
+                return <GiLindenLeaf/>
+            case "water":
+                return <GiDrop/>
+            case "fire":
+                return <FaFire/>
+            case "steel":
+                return <GiAnvil/>
+            case "ghost":
+                return <FaGhost/>
+            case "bug":
+                return <IoIosBug/>
+            case "rock":
+                return <GiRuneStone/>
+            case "ground":
+                return <FaMountain/>
+            case "poison":
+                return <FaSkullCrossbones/>
+            case "flying":
+                return <GiAngelWings/>
+            case "fighting":
+                return <GiPunchBlast/>
+            case "fairy":
+                return <GiFairyWand/>
+            default:
+                break;
+        }
+
+    },
+    iconWeaknessSelector(type){
+        switch (type) {
+            case "normal":
+                return <GiPunchBlast/>
+            case "dark":
+                return <GiPunchBlast/>
+            case "dragon":
+                return <GiFairyWand/>
+            case "ice":
+                return <GiAnvil/>
+            case "psychic":
+                return <FaGhost/>
+            case "electric":
+                return <FaMountain/>
+            case "grass":
+                return <FaFire/>
+            case "water":
+                return <GiLindenLeaf/>
+            case "fire":
+                return <GiDrop/>
+            case "steel":
+                return <FaFire/>
+            case "ghost":
+                return <GiEvilMoon/>
+            case "bug":
+                return <GiRuneStone/>
+            case "rock":
+                return <GiDrop/>
+            case "ground":
+                return <FaSnowflake/>
+            case "poison":
+                return <FaEye/>
+            case "flying":
+                return <GiElectric/>
+            case "fighting":
+                return <GiAngelWings/>
+            case "fairy":
+                return <FaSkullCrossbones/>
+            default:
+                break;
+        }
+    },
     
 })
 
