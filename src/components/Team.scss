@@ -2,7 +2,7 @@
 .p-card {
 	position: relative;
 	width: 300px;
-	height: 500px;
+	height: 520px;
 	background-color: #fff;
 	border-radius: 5px;
 	margin: 30px 10px;
@@ -54,7 +54,7 @@
 	color: #fff;
 }
 .p-card > .stats > li > h5 { margin: 0; }
-.p-card > .stats > li:hover { background-color: #fff5; }
+
 .p-card > .stats > li:first-of-type {
 	border-right: 1px solid #333;
 	border-bottom-left-radius: 5px;
@@ -281,6 +281,22 @@
   color: #f77;
 }
 
+.p-card > .close {
+	background-color: #E40320;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	right: 0;
+	top: 0;
+	color: rgb(255, 0, 0);
+	border-radius: 50%;
+	background-color:  #E40320;
+	display: none;
+
+}
+.p-card > .close:hover {
+		background-color: darken( #E40320, 5);
+}
 /* Fonts */
 .display-3,
 .details > h3 { font-family: 'Quicksand' !important; }

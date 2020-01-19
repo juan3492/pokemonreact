@@ -9,26 +9,40 @@ import Axios from "axios"
 import Button from "react-bootstrap/Button"
 import Card from "react-bootstrap/Card"
 import Col from "react-bootstrap/Col"
-import Form from "react-bootstrap/Form"
-import Image from "react-bootstrap/Image"
 import ProgressBar from "react-bootstrap/ProgressBar"
 import Row from "react-bootstrap/Row"
 import Table from "react-bootstrap/Table"
 import Spinner from "react-bootstrap/Spinner"
+import dictionary from "./dictionary"
 
-//icons
-import GiRing from "react-icons/gi"
+// material design 
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
 
-const Browser = ({loading, pokemon, pokename, pokenameChange, pokenameRequest, progressBarColor, addPokemon}) => (
+const Browser = ({dictionary, loading, pokemon, pokename, pokenameChange, pokenameRequest, progressBarColor, addPokemon}) => {
+    return (
     <section>
         <Card className="browser">
             <Card.Header>Escriba el nombre del pokemon que desee agregar a su equipo</Card.Header>
             <Card.Body>    
-            <Form.Control name="pokename" type="text" placeholder="Ej: Pikachu" 
+            <Autocomplete
+            id="combo-box-demo"
+            autoHighlight
+            options={dictionary}
+            getOptionLabel={option => option}
+            style={{ width: 300 }}
+            onChange={(event,value) => pokenameChange(value)}
+            renderInput={params => (
+                <TextField {...params} 
+                label="Elije tu pokemon" 
+                variant="outlined" fullWidth 
                 onChange={event => pokenameChange(event.target.value)}
-                onKeyDown={event => { event.key === 'Enter' ? pokenameRequest(pokename) : void(0) } }/>
+                onKeyDown={event => { event.key === 'Enter' ? pokenameRequest(pokename) : void(0) }}
+                />
+            )}
+            />
                 <br/>
             { loading ?
                  <Button variant="outline danger" disabled>
@@ -63,12 +77,12 @@ const Browser = ({loading, pokemon, pokename, pokenameChange, pokenameRequest, p
                 <Card className="pokeinfo" style={{padding: "1%"}}>
                 <Row>
                     <Col sm={4} className="poke-image">
-                        <Card style={{height: "100%", marginBottom: "1%"}}>
-                            <Image className="" src={pokemon.sprites.front_default} style={{height: "100%"}} />
+                        <Card style={{height: "100%", margin: "1%"}}>
+                            <Card.Img src={pokemon.sprites.front_default} />
                         </Card>
                     </Col>
                     <Col className="poke-basic">
-                        <Table  striped bordered hover variant>
+                        <Table responsive bordered style={{marginTop: "1%"}} >
                             <tbody>
                                 <tr>
                                     <td>Nombre</td>
@@ -76,8 +90,8 @@ const Browser = ({loading, pokemon, pokename, pokenameChange, pokenameRequest, p
                                 </tr>
                                 <tr>
                                     <td>Tipo/s</td>
-                                    <td>{pokemon.types[1] ?  <p> {pokemon.types[0].type.name} / {pokemon.types[1].type.name}</p> 
-                                                            : <p> {pokemon.types[0].type.name} </p>}
+                                    <td>{pokemon.types[1] ?  <span> {pokemon.types[0].type.name} / {pokemon.types[1].type.name}</span> 
+                                                            : <span> {pokemon.types[0].type.name} </span>}
                                     </td>
                                 </tr>
                                 <tr>
@@ -94,48 +108,53 @@ const Browser = ({loading, pokemon, pokename, pokenameChange, pokenameRequest, p
                 </Row>
                 <Row className="poke-stats">
                     <Col sm={4}>
-                        <Card style={{height: "100%", marginTop: "1%"}}>
-                            <Image  src={pokemon.sprites.back_default} style={{height: "100%"}} alt=""/>
+                        <Card style={{ height:"100%", margin: "1%"}}>
+                            <Card.Img src={pokemon.sprites.back_default}/>
                         </Card>
                     </Col>
                     <Col>
-                        <ProgressBar variant={progressBarColor(pokemon.stats[5].base_stat)} 
-                                    label={`HP : ${pokemon.stats[5].base_stat}`} 
-                                    now={pokemon.stats[5].base_stat} max={255} />
-                        <br/>
-                        <ProgressBar variant={progressBarColor(pokemon.stats[4].base_stat)} 
-                                    label={`Ataque : ${pokemon.stats[4].base_stat}`} 
-                                    now={pokemon.stats[4].base_stat} max={230} />
-                        <br/>
-                        <ProgressBar variant={progressBarColor(pokemon.stats[3].base_stat)} 
-                                    label={`Defensa : ${pokemon.stats[3].base_stat}`} 
-                                    now={pokemon.stats[3].base_stat} max={230} />
-                        <br/>
-                        <ProgressBar variant={progressBarColor(pokemon.stats[2].base_stat)} 
-                                    label={`Ataque Spe : ${pokemon.stats[2].base_stat}`} 
-                                    now={pokemon.stats[2].base_stat} max={230} />
-                        <br/>
-                        <ProgressBar variant={progressBarColor(pokemon.stats[1].base_stat)} 
-                                    label={`Defensa Spe : ${pokemon.stats[1].base_stat}`} 
-                                    now={pokemon.stats[1].base_stat} max={230} />
-                        <br/>
-                        <ProgressBar variant={progressBarColor(pokemon.stats[0].base_stat)}
-                                    label={`Velocidad : ${pokemon.stats[0].base_stat}`} 
-                                    now={pokemon.stats[0].base_stat} max={230} />  
+                        <Card style={{height:"100%", margin: "1%"}}>
+                            <Card.Body>
+                                <ProgressBar variant={progressBarColor(pokemon.stats[5].base_stat)} 
+                                            label={`HP : ${pokemon.stats[5].base_stat}`} 
+                                            now={pokemon.stats[5].base_stat} max={255} />
+                                <br/>
+                                <ProgressBar variant={progressBarColor(pokemon.stats[4].base_stat)} 
+                                            label={`Ataque : ${pokemon.stats[4].base_stat}`} 
+                                            now={pokemon.stats[4].base_stat} max={230} />
+                                <br/>
+                                <ProgressBar variant={progressBarColor(pokemon.stats[3].base_stat)} 
+                                            label={`Defensa : ${pokemon.stats[3].base_stat}`} 
+                                            now={pokemon.stats[3].base_stat} max={230} />
+                                <br/>
+                                <ProgressBar variant={progressBarColor(pokemon.stats[2].base_stat)} 
+                                            label={`Ataque Spe : ${pokemon.stats[2].base_stat}`} 
+                                            now={pokemon.stats[2].base_stat} max={230} />
+                                <br/>
+                                <ProgressBar variant={progressBarColor(pokemon.stats[1].base_stat)} 
+                                            label={`Defensa Spe : ${pokemon.stats[1].base_stat}`} 
+                                            now={pokemon.stats[1].base_stat} max={230} />
+                                <br/>
+                                <ProgressBar variant={progressBarColor(pokemon.stats[0].base_stat)}
+                                            label={`Velocidad : ${pokemon.stats[0].base_stat}`} 
+                                            now={pokemon.stats[0].base_stat} max={230} />  
+                            </Card.Body>
+                        </Card>
                     </Col>
                 </Row>
                 <Button variant="outline-success" style={{ margin : "1.5%" }} 
                         onClick={()=> addPokemon(pokemon)} >Agregar pokemon a mi equipo</Button>
             </Card>
         }
-    </section>
-)
-
+    </section>  
+    )
+}
 
 const mapStateToProps = (state) => ({
     pokemon : state.browserinfo,
     pokename : state.pokename,
-    loading : state.loading
+    loading : state.loading,
+    dictionary: dictionary
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -183,7 +202,7 @@ const mapDispatchToProps = (dispatch) => ({
     progressBarColor(stat){
         if(between(stat, 150, 255)){
             return("danger")
-        }
+        }   
         if(between(stat,110, 149)){
             return("warning")
         }

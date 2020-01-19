@@ -14,8 +14,8 @@ import { FaStarOfLife, FaSnowflake, FaEye, FaFire, FaGhost, FaMountain,
 import { GiEvilMoon, GiSeaDragon, GiElectric, GiLindenLeaf, GiDrop,
          GiAnvil, GiRuneStone, GiAngelWings, GiPunchBlast, GiFairyWand} from "react-icons/gi"
 import { IoIosBug } from "react-icons/io";
-const Team = ({capitalize, deletePokemon, iconTypeSelector, iconWeaknessSelector, poketeam, progressBarColor}) => {
 
+const Team = ({capitalize, deletePokemon, iconTypeSelector, iconWeaknessSelector, poketeam, progressBarColor}) => {
     if(poketeam.length === 0){
         return(
         <section>
@@ -26,17 +26,17 @@ const Team = ({capitalize, deletePokemon, iconTypeSelector, iconWeaknessSelector
         )
     }else{  
         return(
-        <section>
+            <section>
             <Card style ={{padding : "1%", marginTop: "1%", marginBotton: "1%"}} >
                 <Card.Header className="text-center">Equipo Pokemon</Card.Header>
                 <div id="primary-content" className="primary-content">
                     <div className="row">
                         {
                             poketeam.map((pokemon, index) =>
-                                <div className="col" key={index}>
+                            <div className="col" key={index}>
                                     <div 
                                     className={`p-card ${ pokemon.types[1]?  pokemon.types[Math.floor(Math.random() * (1 - 0 + 1))].type.name  
-                                                                            : pokemon.types[0].type.name }`}>
+                                        : pokemon.types[0].type.name }`}>
                                         <div className="character-area">
                                             <img className="character" src={pokemon.sprites.front_default} />
                                         </div>
@@ -52,7 +52,7 @@ const Team = ({capitalize, deletePokemon, iconTypeSelector, iconWeaknessSelector
                                                         onClick={()=>deletePokemon(pokemon)}>Borrar</Button>
                                                 </Col>
                                             </Row>
-                                                <Row>
+                                                <Row >
                                                     <Col>
                                                         <span>Atk: {pokemon.stats[4].base_stat}</span>
                                                         <ProgressBar variant={progressBarColor(pokemon.stats[4].base_stat)} 
