@@ -33,7 +33,7 @@ const Browser = ({dictionary, loading, pokemon, pokename, pokenameChange, pokena
             options={dictionary}
             getOptionLabel={option => option}
             style={{ width: 300 }}
-            onChange={(event,value) => pokenameChange(value)}
+            onChange={(event,value) =>{if(value !== null){pokenameChange(value); pokenameRequest(value)}}}
             renderInput={params => (
                 <TextField {...params} 
                 label="Elije tu pokemon" 

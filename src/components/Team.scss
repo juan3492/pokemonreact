@@ -291,11 +291,8 @@
 	color: rgb(255, 0, 0);
 	border-radius: 50%;
 	background-color:  #E40320;
-	display: none;
 
-}
-.p-card > .close:hover {
-		background-color: darken( #E40320, 5);
+	z-index: 1;
 }
 /* Fonts */
 .display-3,

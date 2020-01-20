@@ -13,7 +13,7 @@ import { FaStarOfLife, FaSnowflake, FaEye, FaFire, FaGhost, FaMountain,
          FaSkullCrossbones } from "react-icons/fa"
 import { GiEvilMoon, GiSeaDragon, GiElectric, GiLindenLeaf, GiDrop,
          GiAnvil, GiRuneStone, GiAngelWings, GiPunchBlast, GiFairyWand} from "react-icons/gi"
-import { IoIosBug } from "react-icons/io";
+import { IoIosBug, IoIosClose } from "react-icons/io";
 
 const Team = ({capitalize, deletePokemon, iconTypeSelector, iconWeaknessSelector, poketeam, progressBarColor}) => {
     if(poketeam.length === 0){
@@ -36,20 +36,26 @@ const Team = ({capitalize, deletePokemon, iconTypeSelector, iconWeaknessSelector
                             <div className="col" key={index}>
                                     <div 
                                     className={`p-card ${ pokemon.types[1]?  pokemon.types[Math.floor(Math.random() * (1 - 0 + 1))].type.name  
-                                        : pokemon.types[0].type.name }`}>
+                                        : pokemon.types[0].type.name }`} style={{ x_index: "1"}}>
                                         <div className="character-area">
                                             <img className="character" src={pokemon.sprites.front_default} />
+                                            <Button className="close" 
+                                            style={{borderRadius: "50%", 
+                                                    color:"white", 
+                                                    backgroundColor:"re#dc3545", 
+                                                    padding: "2%", 
+                                                    borderColor:"re#dc3545"}} 
+                                            variant="danger" 
+                                            onClick={()=>deletePokemon(pokemon)}>
+                                                <IoIosClose/>
+                                            </Button>
                                         </div>
-                                        <div className="details">
+                                        <div className="details text-center">
                                             <span>{pokemon.types[1] ?  <p> {pokemon.types[0].type.name} / {pokemon.types[1].type.name}</p> 
                                                                     : <p> {pokemon.types[0].type.name}</p>} </span>
                                             <Row>
-                                                <Col>
+                                                <Col className = "text-center">
                                                     <h3>{ capitalize(pokemon.name) }</h3>
-                                                </Col>
-                                                <Col md={{ span: 4 }}>
-                                                    <Button variant="outline-danger" size="sm"
-                                                        onClick={()=>deletePokemon(pokemon)}>Borrar</Button>
                                                 </Col>
                                             </Row>
                                                 <Row >
